@@ -1,0 +1,53 @@
+.action {
+    &:first-child {
+        margin-right: auto;
+    }
+}
+
+.actionInput {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.actionLabel {
+    align-items: center;
+    background: #fff;
+    border-bottom: solid 0.25rem #fff;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+    height: 100%;
+    padding: 0.25rem 0.5rem;
+    transition: 300ms, background-color 0ms;
+
+    svg {
+        transition: transform 300ms;
+    }
+}
+
+.actionInput:checked ~ * svg {
+    opacity: 0.2;
+}
+
+.actionLabel:active {
+    background-color: rgba(34, 0, 187, 0.2);
+    transition: none;
+}
+
+@media (hover: hover) {
+    .actionInput:focus-visible + .actionLabel,
+    .actionLabel:hover {
+        border-bottom-color: currentColor;
+        color: rgba(34, 0, 187, 1);
+
+        svg {
+            transform: rotate(-45deg);
+        }
+    }
+}

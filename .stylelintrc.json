@@ -1,0 +1,19 @@
+{
+  "plugins": ["stylelint-order"],
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "no-descending-specificity": null,
+    "no-empty-source": null,
+    "block-no-empty": null,
+    "shorthand-property-no-redundant-values": true,
+    "rule-empty-line-before": [
+      "always",
+      {
+        "except": ["first-nested"],
+        "ignore": ["after-comment"]
+      }
+    ],
+    "unit-no-unknown": true,
+    "order/properties-alphabetical-order": true
+  }
+}

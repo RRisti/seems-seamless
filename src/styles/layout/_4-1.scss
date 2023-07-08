@@ -1,0 +1,27 @@
+body[data-columns='4'] {
+    .grid {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        transition: grid-template-columns var(--transition-duration), grid-template-rows var(--transition-duration);
+
+        &[data-active='1'] {
+            grid-template-columns: 20fr 1fr 1fr 1fr;
+        }
+
+        &[data-active='2'] {
+            grid-template-columns: 1fr 20fr 1fr 1fr;
+        }
+
+        &[data-active='3'] {
+            grid-template-columns: 1fr 1fr 20fr 1fr;
+        }
+
+        &[data-active='4'] {
+            grid-template-columns: 1fr 1fr 1fr 20fr;
+        }
+    }
+
+    .cell {
+        background-position: center;
+        min-width: 4rem;
+    }
+}

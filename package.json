@@ -1,0 +1,38 @@
+{
+  "name": "seems-seamless",
+  "version": "1.0.0",
+  "description": "Seamless 2x2 tile viewer",
+  "main": "index.js",
+  "author": "Risto Risti <risto.risti@gmail.com>",
+  "license": "MIT",
+  "browserslist": [
+    "> 2%"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/eslint-parser": "^7.22.5",
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "eslint": "^8.44.0",
+    "eslint-nibble": "^8.1.0",
+    "eslint-plugin-prefer-optional-chaining": "^0.0.1",
+    "eslint-plugin-sort-destructure-keys": "^1.5.0",
+    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "eslint-plugin-unicorn": "^47.0.0",
+    "postcss": "^8.4.25",
+    "postcss-advanced-variables": "^3.0.1",
+    "postcss-cli": "^10.1.0",
+    "postcss-nested": "^6.0.1",
+    "postcss-scss": "^4.0.6",
+    "prettier": "^2.8.8",
+    "pug": "^3.0.2",
+    "stylelint": "^15.9.0",
+    "stylelint-order": "^6.0.3"
+  },
+  "scripts": {
+    "build:css": "postcss src/styles/styles.scss -o dist/styles.css",
+    "build:html": "node cli/build-html.js",
+    "build:js": "cp src/index.js dist/index.js",
+    "lint-nibble": "eslint-nibble 'index.js'"
+  }
+}

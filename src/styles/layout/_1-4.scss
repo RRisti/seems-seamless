@@ -1,0 +1,28 @@
+body[data-columns='1'] {
+    .grid {
+        font-size: 8rem;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        transition: grid-template-columns var(--transition-duration), grid-template-rows var(--transition-duration);
+
+        &[data-active='1'] {
+            grid-template-rows: 20fr 1fr 1fr 1fr;
+        }
+
+        &[data-active='2'] {
+            grid-template-rows: 1fr 20fr 1fr 1fr;
+        }
+
+        &[data-active='3'] {
+            grid-template-rows: 1fr 1fr 21fr 1fr;
+        }
+
+        &[data-active='4'] {
+            grid-template-rows: 1fr 1fr 1fr 20fr;
+        }
+    }
+
+    .cell {
+        background-position: center;
+    }
+}

@@ -1,0 +1,70 @@
+$toolbarHeight: 2.5rem;
+
+:root {
+    --zoom-level: 1;
+    --background-width: 0px;
+    --background-repeat: repeat;
+    --transition-duration: 700ms;
+}
+
+body {
+    background: repeating-conic-gradient(#cccccc 0 25%, #0000 0 50%) 50% /1.5rem 1.5rem;
+    height: 100vh;
+    margin: 0;
+    max-height: -webkit-fill-available !important;
+    overscroll-behavior: none;
+    padding: 0;
+}
+
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: $toolbarHeight 1fr;
+    height: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    height: 100%;
+}
+
+.cell {
+    background-position: 0 0;
+    background-repeat: var(--background-repeat);
+    background-size: calc(var(--zoom-level, 1) * var(--background-width, 100)) auto;
+    outline: solid 1px;
+    outline-offset: -1px;
+    position: relative;
+
+    .grid.__transitioning & {
+        transition: background-size 600ms;
+    }
+}
+
+.toolbar {
+    align-items: center;
+    background-color: #fff;
+    display: flex;
+    z-index: 1;
+
+    > * {
+        align-items: center;
+        background: white;
+        box-sizing: border-box;
+        cursor: pointer;
+        display: flex;
+        font-family: monospace;
+        font-weight: bold;
+        gap: 0.5rem;
+        height: 100%;
+        text-align: center;
+    }
+}
+
+@import 'toolbar/action';
+@import 'toolbar/information';
+
+@import 'layout/1-4';
+@import 'layout/4-1';
+@import 'layout/2-2';
