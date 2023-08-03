@@ -16,13 +16,32 @@
         }
     }
 
+    class Storage {
+        getData() {
+            return JSON.parse(localStorage.getItem('config')) || {};
+        }
+
+        setData(data) {
+            localStorage.setItem(
+                'config',
+                JSON.stringify({
+                    ...this.getData(),
+                    ...data,
+                }),
+            );
+        }
+    }
+
     class Viewer {
         constructor() {
+            this.storage = new Storage();
             this.imageElement = new Image();
-            this.initalZoom = 0.9;
             this.width = 0;
             this.height = 0;
             this.backgroundSize = 100;
+            this.initalZoom = 0.9;
+            this.zoomStep = 20;
+
             this.layout = this.layoutGenerator();
             this.bodyElement = document.querySelector('body');
             this.canvasElement = document.createElement('canvas');
@@ -36,9 +55,30 @@
             this.grid = new Grid();
             this.hasImage = false;
             this.blobCache = null;
-            this.currentSource = null;
+
+            let source = null;
+            Object.defineProperty(this, 'currentSource', {
+                get: () => source,
+                set: (currentSource) => {
+                    source = currentSource;
+                    this.storage.setData({ currentSource });
+                },
+            });
 
             this.addEventListeners();
+            this.load();
+        }
+
+        load() {
+            const config = this.storage.getData();
+
+            if (config.currentSource) {
+                this.loadImageWithProgress(config.currentSource);
+            }
+
+            if (config.backgroundSize) {
+                this.setBackgroundSize(config.backgroundSize);
+            }
         }
 
         *layoutGenerator() {
@@ -146,6 +186,8 @@
         }
         setBackgroundSize(backgroundSize) {
             this.backgroundSize = Math.min(250, Math.max(10, backgroundSize));
+            this.storage.setData({ backgroundSize: this.backgroundSize });
+
             this.zoomInputElement.value = `${backgroundSize}`;
             const zoom = +(this.backgroundSize / 100).toFixed(2);
             this.setCssVariable('--zoom-level', `${zoom}`);
@@ -215,15 +257,17 @@
             }
 
             if (element) {
-                this.grid.element.setAttribute(
-                    'data-active',
-                    `${1 + [...element.parentElement.children].indexOf(element)}`,
-                );
+                const activeIndex = [...element.parentElement.children].indexOf(element);
+                this.grid.element.setAttribute('data-active', `${activeIndex + 1}`);
             }
 
             this.cellElements.forEach((cellElement) => {
                 cellElement.classList.toggle('__active', cellElement === element);
             });
+        }
+
+        toggleCellsByIndex(index) {
+            this.toggleCells(this.cellElements[index]);
         }
 
         addEventListeners() {
@@ -296,13 +340,30 @@
                 if (!this.hasImage) return;
 
                 switch (event.code) {
+                    case 'Digit1': {
+                        return this.toggleCellsByIndex(0);
+                    }
+                    case 'Digit2': {
+                        return this.toggleCellsByIndex(1);
+                    }
+                    case 'Digit3': {
+                        return this.toggleCellsByIndex(2);
+                    }
+                    case 'Digit4': {
+                        return this.toggleCellsByIndex(3);
+                    }
+
                     case 'ArrowDown':
                     case 'ArrowUp': {
                         this.grid.enableTransition();
-                        const direction = event.code === 'ArrowUp' ? -1 : 1;
+                        const isZoomingIn = event.code === 'ArrowUp';
+                        const { backgroundSize, zoomStep } = this;
 
-                        const newSize = Math.floor(this.backgroundSize - direction * (20 - (this.backgroundSize % 20)));
-                        this.setBackgroundSize(newSize);
+                        const size = isZoomingIn
+                            ? Math.floor(backgroundSize / zoomStep + 1) * zoomStep
+                            : Math.ceil(backgroundSize / zoomStep - 1) * zoomStep;
+
+                        this.setBackgroundSize(size);
                         break;
                     }
 
