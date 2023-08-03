@@ -1,5 +1,5 @@
 {
-  "name": "seems-seamless",
+  "name": "daydream",
   "version": "1.0.0",
   "description": "Seamless 2x2 tile viewer",
   "main": "index.js",
@@ -11,6 +11,7 @@
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/eslint-parser": "^7.22.5",
+    "@rollup/plugin-terser": "^0.4.3",
     "autoprefixer": "^10.4.14",
     "chokidar": "^3.5.3",
     "cssnano": "^6.0.1",
@@ -27,6 +28,7 @@
     "postcss-scss": "^4.0.6",
     "prettier": "^2.8.8",
     "pug": "^3.0.2",
+    "rollup": "^3.27.1",
     "stylelint": "^15.9.0",
     "stylelint-order": "^6.0.3"
   },
@@ -35,5 +37,6 @@
     "build:html": "node cli/build-html.js",
     "build:js": "cp src/index.js dist/index.js",
     "lint-nibble": "eslint-nibble 'index.js'"
-  }
+  },
+  "type": "module"
 }

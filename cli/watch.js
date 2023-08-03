@@ -22,5 +22,8 @@ chokidar
         const extension = file.split('.').pop();
         const command = mapping[extension];
 
-        if (command) spawn('yarn', [command], { cwd });
+        if (command) {
+            console.log({ command });
+            spawn('yarn', [command], { cwd });
+        }
     });
